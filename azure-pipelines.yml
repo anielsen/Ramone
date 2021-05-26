@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  name: 'Default'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  major: '2.3'
+  minor: '0'
+  myPackageVersion:  $[format('{0}.{1}', variables['major'], variables['minor'])]
+
+steps:
+- pwsh: |
+    Write-host "Using version $env:myPackageVersion"
+  displayName: "Show version"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/Ramone.csproj'
+    versioningScheme: 'off'
