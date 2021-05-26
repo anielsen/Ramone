@@ -23,7 +23,7 @@ steps:
     versioningScheme: 'off'
 
 - task: NuGetAuthenticate@0
-  inputs:
+
 - task: NuGetCommand@2
   inputs:
     command: 'push'
