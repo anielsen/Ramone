@@ -13,17 +13,20 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  major: '2.3'
-  minor: '0'
   myPackageVersion:  $[format('{0}.{1}', variables['major'], variables['minor'])]
 
 steps:
-- pwsh: |
-    Write-host "Using version $env:myPackageVersion"
-  displayName: "Show version"
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/Ramone.csproj'
     versioningScheme: 'off'
+
+- task: NuGetAuthenticate@0
+  inputs:
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'c50d8b4a-d6e2-4c19-b4fa-e08a11aa77a3/7b8cf314-a883-4512-bb08-8d10d42d17a7'
