@@ -19,7 +19,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: '**/Ramone.csproj'
+    versioningScheme: 'off'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/Ramone.MediaTypes.Html.csproj'
     versioningScheme: 'off'
 
 - task: NuGetAuthenticate@0
