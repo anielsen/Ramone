@@ -23,8 +23,10 @@ steps:
     versioningScheme: 'off'
 
 - task: NuGetAuthenticate@0
+  displayName: 'Nuget auth'
 
 - task: NuGetCommand@2
+  displayName: 'Nuget push'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
